@@ -9,7 +9,7 @@ import java.util.Map;
 public class MainController {
     @RequestMapping("/shopcar")
     public String hello(Map<String, Object> model) {
-        model.put("name", "Spring Boot with FreeMarker .ftl");
-        return "hello";
+        model.put("name", "Spring Boot with Thymeleaf  *.html");
+        return "hello1";
     }
 }
