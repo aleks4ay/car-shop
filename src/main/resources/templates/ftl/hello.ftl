@@ -1,6 +1,6 @@
 <#import "/spring.ftl" as spring/>
 
-<html>
+<html lang="en">
 <head>
     <title>Person List</title>
     <link rel="stylesheet"
@@ -12,6 +12,8 @@
 <br><br>
 <div>
     Hello from ${name}</td>
+    <p><a href="newClient">New user</a></p>
+    <p><a href="clients">List user</a></p>
 </div>
 </body>
 </html>
