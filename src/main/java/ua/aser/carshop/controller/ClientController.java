@@ -2,9 +2,7 @@ package ua.aser.carshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ua.aser.carshop.model.Client;
 import ua.aser.carshop.repository.ClientReposetories;
 
@@ -18,12 +16,11 @@ public class ClientController {
 
     @GetMapping("/newClient")
     public String newClient(Map<String, Object> model) {
+        model.put("client", new Client("", "", ""));
         return "user_new";
     }
     @PostMapping("/newClient")
-    public String newClient(@RequestParam String login,@RequestParam String email,
-                              @RequestParam String password, Map<String, Object> model) {
-        Client client = new Client(login, password, email);
+    public String newClient(@ModelAttribute Client client, Map<String, Object> model) {
         clientRepo.save(client);
         return "redirect:clients";
     }
@@ -34,12 +31,9 @@ public class ClientController {
         return "user_list";
     }
 
-    @GetMapping("/client")
-    public String deleteById (@RequestParam String action, @RequestParam String id, Map<String, Object> model) {
-        if (action.equals("delete")) {
-            clientRepo.deleteById(Long.parseLong(id));
-            return "redirect:clients";
-        }
+    @GetMapping("/client_del")
+    public String deleteById (@RequestParam String id, Map<String, Object> model) {
+        clientRepo.deleteById(Long.valueOf(id));
         return "redirect:clients";
     }
 }

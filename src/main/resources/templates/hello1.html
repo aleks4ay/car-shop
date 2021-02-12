@@ -10,8 +10,11 @@
     <span th:text="'Today is: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" th:remove="tag"></span>
 
 </p>
+
+<p><a href="newClient">New user</a></p>
+<p><a href="clients">List user</a></p>
+
 <p th:text="'Hello from ' + ${name}"/>
-<p th:text="'Hello from ' + ${name}"/>
-<p th:text="'Hello from ' + ${name}"/>
+
 </body>
 </html>

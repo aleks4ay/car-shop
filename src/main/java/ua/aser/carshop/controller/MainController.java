@@ -1,13 +1,7 @@
 package ua.aser.carshop.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.aser.carshop.model.Client;
-import ua.aser.carshop.repository.ClientReposetories;
-
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -15,18 +9,9 @@ public class MainController {
 
     @RequestMapping("/shopcar")
     public String hello(Map<String, Object> model) {
-        model.put("name", "Spring Boot with FreeMarker .ftl");
-        return "hello";
+        model.put("name", "Spring Boot with Thymeleaf .html");
+        return "hello1";
     }
-
-
-//    @Autowired
-//    private ClientReposetories clientRepo;
-
-//    @GetMapping("/")
-//    public String index() {
-//        return "persons";
-//    }
 
 /*    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String hello(Model model, @RequestParam(defaultValue = "") String searchName) {

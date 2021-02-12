@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>New User</title>
+</head>
+<body>
+    <form action="#" th:action="@{/newClient}" th:object="${client}" method="post">
+        <input type="text" name="login" placeholder="your login"/>
+        <input type="text" name="email" placeholder="your e-mail"/>
+        <input type="password" name="password" />
+        <button type="submit">Save</button>
+        <button onclick="window.history.back()" type="button">Cancel</button>
+    </form>
+</body>
+</html>
+
+

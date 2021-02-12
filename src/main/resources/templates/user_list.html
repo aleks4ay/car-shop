@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User List</title>
+</head>
+<body>
+<h1>User List</h1>
+
+
+<table>
+    <tr th:each="client,step : ${clients}">
+        <td><input type="hidden" value="#" th:value="${client.id}"/></td>
+        <td th:text="${step.count} + '. ' + ${client.login}"></td>
+        <td th:text="${client.email}"></td>
+        <!--<td><input type="checkbox" th:checked="${#bools.isTrue(${client.enabled})}" disabled> </td>-->
+        <td th:text="${client.registred}"></td>
+        <td><a href="client_del" th:href="'client_del?id=' + ${client.id}">Delete</a></td>
+    </tr>
+</table>
+<button onclick="window.history.back()" type="button">Back</button>
+
+</body>
+</html>
