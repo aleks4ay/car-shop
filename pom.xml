@@ -12,7 +12,7 @@
 	<artifactId>car-shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>car-shop</name>
-	<description>Site for Spring Boot</description>
+	<orderItem>Site for Spring Boot</orderItem>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

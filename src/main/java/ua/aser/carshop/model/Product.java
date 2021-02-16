@@ -18,7 +18,7 @@ public class Product {
     private LocalDateTime registred = LocalDateTime.now();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    private Collection<Description> descriptions;
+    private Collection<OrderItem> orderItems;
 
     public Product() {
     }
@@ -69,12 +69,12 @@ public class Product {
         this.registred = registred;
     }
 
-    public Collection<Description> getDescriptions() {
-        return descriptions;
+    public Collection<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setDescriptions(Collection<Description> descriptions) {
-        this.descriptions = descriptions;
+    public void setOrderItems(Collection<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Product {
                 ", color='" + color + '\'' +
                 ", price=" + price +
                 ", registred=" + registred +
-                ", descriptions=" + descriptions +
+                ", orderItems=" + orderItems +
                 '}';
     }
 }

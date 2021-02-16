@@ -9,13 +9,13 @@
 
 
 <table>
-    <tr th:each="client,step : ${clients}">
-        <td><input type="hidden" value="#" th:value="${client.id}"/></td>
-        <td th:text="${step.count} + '. ' + ${client.login}"></td>
-        <td th:text="${client.email}"></td>
-        <!--<td><input type="checkbox" th:checked="${#bools.isTrue(${client.enabled})}" disabled> </td>-->
-        <td th:text="${client.registred}"></td>
-        <td><a href="client_del" th:href="'client_del?id=' + ${client.id}">Delete</a></td>
+    <tr th:each="user,step : ${users}">
+        <td><input type="hidden" value="#" th:value="${user.id}"/></td>
+        <td th:text="${step.count} + '. ' + ${user.login}"></td>
+        <td th:text="${user.email}"></td>
+        <!--<td><input type="checkbox" th:checked="${#bools.isTrue(${user.enabled})}" disabled> </td>-->
+        <td th:text="${user.registred}"></td>
+        <td><a href="user_del" th:href="'user_del?id=' + ${user.id}">Delete</a></td>
     </tr>
 </table>
 <button onclick="window.history.back()" type="button">Back</button>

@@ -1,13 +1,12 @@
 package ua.aser.carshop.model;
 
-import org.hibernate.annotations.BatchSize;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-public class Client {
+@Table(name = "usr")
+public class User {
 
     @Id
     @GeneratedValue
@@ -21,20 +20,18 @@ public class Client {
     private LocalDateTime registred = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "client_roles", joinColumns = @JoinColumn(name = "client_id"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER) //    @Fetch(FetchMode.SUBSELECT)
     private Set<Role> roles = new HashSet<>();
 
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<ClientRole> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Order> orders = new ArrayList<>();
 
-//    private List<Offer> offers = new ArrayList<>();
-
-    public Client() {
+    public User() {
     }
 
-    public Client(String login, String password, String email) {
+    public User(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;
@@ -93,19 +90,20 @@ public class Client {
         return roles;
     }
 
-/*    public void setRoles(List<ClientRole> roles) {
-        this.roles = roles;
-    }*/
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles.isEmpty() ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
-    /*public List<Offer> getOffers() {
-        return offers;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
-    }*/
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOffer(Order order) {
+        this.orders.add(order);
+        order.setUser(this);
+    }
 }

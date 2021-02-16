@@ -26,7 +26,7 @@ public class MainController {
 
 
 /*    @RequestMapping(value = "/newClient", method = RequestMethod.POST)
-    public String saveClient(Model model, @ModelAttribute("client") Client client) {
+    public String saveClient(Model model, @ModelAttribute("client") User client) {
         clientRepo.save(client);
         return "redirect:user_list";
     }*/

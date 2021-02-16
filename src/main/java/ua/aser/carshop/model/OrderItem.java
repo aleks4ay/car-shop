@@ -1,14 +1,9 @@
 package ua.aser.carshop.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-public class Description {
+public class OrderItem {
 
     @Id
     @GeneratedValue
@@ -23,12 +18,12 @@ public class Description {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "offer_id")
-    private Offer offer;
+    private Order order;
 
-    public Description() {
+    public OrderItem() {
     }
 
-    public Description(int quantity, double correctPrice, Product product) {
+    public OrderItem(int quantity, double correctPrice, Product product) {
         this.quantity = quantity;
         this.correctPrice = correctPrice;
         this.product = product;
@@ -66,21 +61,21 @@ public class Description {
         this.product = product;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
+    public void setOrder(Order order) {
+        this.order = order;
     }
     @Override
     public String toString() {
-        return "Description{" +
+        return "OrderItem{" +
                 "id=" + id +
                 ", quantity=" + quantity +
                 ", correctPrice=" + correctPrice +
                 ", product_id=" + product.getId() +
-                ", offer_id=" + offer.getId() +
+                ", offer_id=" + order.getId() +
                 '}';
     }
 }
