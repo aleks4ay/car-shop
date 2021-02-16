@@ -1,0 +1,44 @@
+.header_container {
+  margin: 0;
+      padding: 0;
+      display: table;
+      width: 100%; 
+      background-image: url(../img/header_nextev.jpg);
+      background-position: center center;
+      background-repeat: no-repeat;
+      text-align: bottom;
+      /*background-attachment: fixed;*/
+      background-size: cover;
+      height: 300px;  /* Высота шапки */
+}
+
+.header1 {
+  background-size: cover;
+  width: 100%; 
+  background-image: url(../img/header_nextev.jpg);
+  background-repeat: no-repeat;
+  text-align: bottom;
+  height: 300px;
+  font-size: 50px;
+}
+/*.content {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+}*/
+
+.btn-my-r {
+    display: inline-block;
+    color: #3b6696;
+    font-weight: bold;
+    text-decoration: none;
+    background: #eee;
+    margin: 0 2px 6px 0;
+    padding: 4px 5px;
+    font-size: 15px;
+    line-height: 17px;
+    border: solid 2px #3b6696;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}

@@ -13,6 +13,7 @@ import ua.aser.carshop.repository.OrderItemReposetories;
 import ua.aser.carshop.repository.ProductReposetories;
 import ua.aser.carshop.repository.UserReposetories;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -43,9 +44,9 @@ public class OrderController {
 
     @GetMapping("/cc")
     public String testС(Map<String, Object> model) {
-        User user = userRepo.findById(14L).orElse(null);
+        User user = ((List<User>)userRepo.findAll()).get(0);
         Order order = new Order();
-        user.addOffer(order);
+        user.addOrder(order);
         Product p1 = new Product("носки", "красные", 45);
         Product p2 = new Product("платок", "Оренбуржский", 145);
         OrderItem i1 = new OrderItem(1, 234, p1);
@@ -59,9 +60,9 @@ public class OrderController {
 
     @GetMapping("/bb")
     public String testB(Map<String, Object> model) {
-        User user = userRepo.findById(13L).orElse(null);
+        User user = ((List<User>)userRepo.findAll()).get(0);
         Order order = new Order();
-        user.addOffer(order);
+        user.addOrder(order);
         Product p1 = productRepo.findById(19L).orElse(null);
         Product p2 = productRepo.findById(21L).orElse(null);
         OrderItem i1 = new OrderItem(3, 45, p1);

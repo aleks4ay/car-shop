@@ -16,7 +16,7 @@ public class User {
 
     private String password;
     private String email;
-    private boolean enabled = true;
+    private boolean active = false;
     private LocalDateTime registred = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
@@ -35,7 +35,6 @@ public class User {
         this.login = login;
         this.password = password;
         this.email = email;
-        this.roles.add(Role.ROLE_USER);
     }
 
     public Long getId() {
@@ -70,12 +69,12 @@ public class User {
         this.email = email;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getRegistred() {
@@ -94,6 +93,10 @@ public class User {
         this.roles = roles.isEmpty() ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
@@ -102,7 +105,7 @@ public class User {
         this.orders = orders;
     }
 
-    public void addOffer(Order order) {
+    public void addOrder(Order order) {
         this.orders.add(order);
         order.setUser(this);
     }
