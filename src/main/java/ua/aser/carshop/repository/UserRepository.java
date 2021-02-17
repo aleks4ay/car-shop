@@ -8,7 +8,7 @@ import ua.aser.carshop.model.User;
 import java.util.List;
 
 @Repository
-public interface UserReposetories extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     User findByLogin (String login);
     List<User> findAllByActive (Boolean enabled);
 

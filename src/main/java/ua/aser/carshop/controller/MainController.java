@@ -84,11 +84,11 @@ public class MainController {
     }
 
     @GetMapping("/customer_add")
-    public String newCustomer(Map<String, Object> model) {
+    public String registration(Map<String, Object> model) {
         return "customer_new";
     }
     @PostMapping("/customer_add")
-    public String newCustomer(@RequestParam String name,@RequestParam String address,
+    public String registration(@RequestParam String name,@RequestParam String address,
                        @RequestParam String email, Map<String, Object> model) {
         Customer customer = new Customer(name, email, address);
         customerRepository.save(customer);

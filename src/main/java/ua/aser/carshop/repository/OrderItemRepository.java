@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ua.aser.carshop.model.OrderItem;
 
 @Repository
-public interface OrderItemReposetories extends CrudRepository<OrderItem, Long> {
+public interface OrderItemRepository extends CrudRepository<OrderItem, Long> {
 }

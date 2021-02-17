@@ -7,7 +7,7 @@ import ua.aser.carshop.model.Product;
 import java.util.List;
 
 @Repository
-public interface ProductReposetories  extends CrudRepository<Product, Long> {
+public interface ProductRepository extends CrudRepository<Product, Long> {
     /*    @Query(value = "SELECT c FROM Customer c WHERE c.name LIKE '%' || :keyword || '%'"
             + " OR c.email LIKE '%' || :keyword || '%'"
             + " OR c.address LIKE '%' || :keyword || '%'")

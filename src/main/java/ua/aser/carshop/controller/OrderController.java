@@ -9,9 +9,9 @@ import ua.aser.carshop.model.OrderItem;
 import ua.aser.carshop.model.Order;
 import ua.aser.carshop.model.Product;
 import ua.aser.carshop.model.User;
-import ua.aser.carshop.repository.OrderItemReposetories;
-import ua.aser.carshop.repository.ProductReposetories;
-import ua.aser.carshop.repository.UserReposetories;
+import ua.aser.carshop.repository.OrderItemRepository;
+import ua.aser.carshop.repository.ProductRepository;
+import ua.aser.carshop.repository.UserRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -19,11 +19,11 @@ import java.util.Map;
 @Controller
 public class OrderController {
     @Autowired
-    private OrderItemReposetories orderItemRepo;
+    private OrderItemRepository orderItemRepo;
     @Autowired
-    private ProductReposetories productRepo;
+    private ProductRepository productRepo;
     @Autowired
-    private UserReposetories userRepo;
+    private UserRepository userRepo;
 
     @GetMapping("/order/newItem")
     public String newClient(Map<String, Object> model) {

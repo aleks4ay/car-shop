@@ -1,12 +1,11 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>User List</title>
-</head>
-<body>
-<h1>User List</h1>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="~{fragments/header :: head}"/>
 
+<body>
+<div th:insert="~{fragments/header :: navbar}"> </div>
+<h1>User List</h1>
 
 <table>
     <tr th:each="user,step : ${users}">
@@ -18,7 +17,6 @@
         <td><a href="user_del" th:href="'user_del?id=' + ${user.id}">Delete</a></td>
     </tr>
 </table>
-<button onclick="window.history.back()" type="button">Back</button>
-
+<div th:insert="~{fragments/header :: footer}"> </div>
 </body>
 </html>
