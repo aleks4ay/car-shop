@@ -13,17 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
-
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
-
-//    @Autowired
-//    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/newUser", "/registration", "/static/**", "/activate/*").permitAll()  //allow full access to all users there
+                .antMatchers("/", "/home", "/hello", "/shopcar", "/newUser", "/registration", "/static/**", "/activate/*").permitAll()  //allow full access to all users there
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
@@ -48,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
             .and()
                 .logout()
+//                .logout().logoutSuccessHandler(logoutHandler)
                 .permitAll();
     }
 
@@ -59,20 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select login, password, active from usr where login=?")
                 .authoritiesByUsernameQuery("select u.login, ur.role from usr u inner join user_roles ur on u.id = ur.user_id where u.login=?");
     }
-
-    /*@Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("u")
-                        .password("p")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }*/
-
 }
 
 

@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
-@Controller
+//@Controller
 public class MainController {
 
-    @RequestMapping("/shopcar")
+    /*@RequestMapping("/shopcar")
     public String hello(Map<String, Object> model) {
         model.put("name", "Spring Boot with Thymeleaf .html");
-        return "hello1";
-    }
+        return "hello";
+    }*/
 
 /*    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String hello(Model model, @RequestParam(defaultValue = "") String searchName) {
