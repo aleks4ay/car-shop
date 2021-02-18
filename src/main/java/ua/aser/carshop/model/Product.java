@@ -1,8 +1,15 @@
 package ua.aser.carshop.model;
 
+import org.thymeleaf.expression.Dates;
+import org.thymeleaf.util.DateUtils;
+
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Locale;
 
 @Entity
 public class Product {
@@ -75,6 +82,11 @@ public class Product {
 
     public void setOrderItems(Collection<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getThymeleafDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+        return registred.format(formatter);
     }
 
     @Override

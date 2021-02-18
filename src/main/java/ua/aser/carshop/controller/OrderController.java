@@ -3,6 +3,8 @@ package ua.aser.carshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.aser.carshop.model.OrderItem;
 import ua.aser.carshop.model.Order;
@@ -31,7 +33,7 @@ public class OrderController {
     private UserService userService;
 
     @GetMapping("/shop")
-    public String getCustomer(Map<String, Object> model) {
+    public String getProduct(Map<String, Object> model) {
         List<Product> products = productService.getAll();
         model.put("products", products);
         return "shop";
@@ -49,6 +51,8 @@ public class OrderController {
                                HttpServletRequest httpServletRequest,
                                HttpSession httpSession,
                                Map<String, Object> model) {
+        boolean isRoleUser = httpServletRequest.isUserInRole("USER");
+        boolean isRoleAdmin = httpServletRequest.isUserInRole("ADMIN");
 //        User user = (User) httpSession.getAttribute("owner");
         String sesseonId = httpSession.getId();
 //        Order order = orderService.getBySessionId(sesseonId);
@@ -69,6 +73,29 @@ public class OrderController {
 //            orderItemService.save(orderItem);
         httpSession.setAttribute("order", order);
         return "redirect:/shop";
+    }
+
+    @GetMapping("/shopAdmin")
+    public String listProductAdmin(Map<String, Object> model) {
+        List<Product> products = productService.getAll();
+        model.put("products", products);
+        return "shop_admin";
+    }
+
+    @PostMapping("/shopAdmin/new")
+    public String newClient(@ModelAttribute Product product, Map<String, Object> model) {
+        productService.save(product);
+        return "redirect:/shopAdmin";
+    }
+
+    @GetMapping("/shopAdmin/change")
+    public String changeProduct(@RequestParam(name = "id") String id,
+                                HttpServletRequest httpServletRequest,
+                                HttpSession httpSession,
+                                Map<String, Object> model) {
+        Product product = productService.getOne(Long.valueOf(id));
+        model.put("product", product);
+        return "product_change";
     }
 
     @GetMapping("/cc")

@@ -10,7 +10,8 @@
 </head>
 <body>
     <div th:fragment="footer">
-      &copy; 2016 Footer
+      <br>
+      &copy; 2021
     </div>
 
     <div th:fragment="navbar">
@@ -28,36 +29,35 @@
               <a class="nav-link" href="/shop">Магазин</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/users">Пользователи</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/cart">Корзина</a>
             </li>
-          </ul>
-          <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
+            <li class="nav-item" th:if="${#httpServletRequest.remoteUser == Null}">
                 <a class="nav-link" href="/registration">Регистрация</a>
-              </li>
-            </ul>
-            <h3 th:text="${#httpServletRequest.remoteUser}">#</h3>
-            <form th:action="@{/login}" method="get">
-              <input type="submit" value="Вход"/>
-            </form>
-            <form th:action="@{/logout}" method="post">
-              <input type="submit" value="Выход"/>
-            </form>
+            </li>
+
+            <li class="nav-item" th:if="${#httpServletRequest.isUserInRole('ADMIN')}">
+                <a class="nav-link" href="/users">Пользователи</a>
+            </li>
+            <li class="nav-item" th:if="${#httpServletRequest.isUserInRole('ADMIN')}">
+                <a class="nav-link" href="/shopAdmin">Редактировать товары</a>
+            </li>
+          </ul>
+
+          <div class="form-inline my-2 my-lg-0">
+              <h4 th:text="${#httpServletRequest.remoteUser}" style="margin-right: 10px; color: #f8f9fa">#</h4>
+              <div th:if="${#httpServletRequest.remoteUser == Null}">
+                <form th:action="@{/login}" method="get">
+                    <input type="submit" value="Вход" class="btn btn-outline-success my-2 my-sm-0"/>
+                </form>
+              </div>
+              <div th:unless="${#httpServletRequest.remoteUser == Null}">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Выход" class="btn btn-outline-success my-2 my-sm-0"/>
+                </form>
+              </div>
           </div>
         </div>
       </nav>
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-

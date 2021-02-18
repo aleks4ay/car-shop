@@ -37,9 +37,9 @@ public class UserController {
         return "user_list";
     }
 
-    @GetMapping("/user_del")
+    @GetMapping("/users/del")
     public String deleteById (@RequestParam String id, Map<String, Object> model) {
         userService.deleteById(Long.valueOf(id));
-        return "redirect:users";
+        return "redirect:/users";
     }
 }

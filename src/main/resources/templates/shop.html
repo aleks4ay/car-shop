@@ -6,24 +6,32 @@
 <div th:insert="~{fragments/header :: navbar}"> </div>
 <h1>S H O P</h1>
 
-<table>
-    <tr th:each="product,step : ${products}">
-        <td><input type="hidden" value="#" th:value="${product.id}"/></td>
-        <td th:text="${step.count}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.color}"></td>
-        <td th:text="${product.price}"></td>
-        <td th:text="${product.registred}"></td>
-        <!--<td th:text="${#dates.format(#product.registred, 'dd MMM yyyy HH:mm')}"></td>-->
-        <td><a href="product_add"
-               th:href="'shop/add?id=' + ${product.id} + '&amp;login=' + ${#httpServletRequest.remoteUser}">
-            Добавить в корзину</a>
-        </td>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">№</th>
+        <th scope="col">Наименование</th>
+        <th scope="col">Цвет</th>
+        <th scope="col">Цена, грн</th>
+        <th scope="col">Дата обновления</th>
+        <th scope="col">Операция</th>
     </tr>
+    </thead>
+    <tbody>
+        <tr th:each="product,step : ${products}">
+            <th scope="row">
+                <input type="hidden" value="#" th:value="${product.id}"/>
+                <span th:text="${step.count}"/>
+            </th>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.color}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.thymeleafDate}"></td>
+            <td><a href="#" th:href="'shop/add?id=' + ${product.id}"> Купить</a> </td>
+        </tr>
+    </tbody>
 </table>
-<!--<p>-->
-    <!--<span th:text="'Today is: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" th:remove="tag"></span>-->
-<!--</p>-->
 
 <div th:insert="~{fragments/header :: footer}"> </div>
 </body>

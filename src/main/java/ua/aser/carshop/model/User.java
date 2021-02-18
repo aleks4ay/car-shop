@@ -2,6 +2,7 @@ package ua.aser.carshop.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Entity
@@ -108,5 +109,19 @@ public class User {
     public void addOrder(Order order) {
         this.orders.add(order);
         order.setUser(this);
+    }
+
+    public boolean isAdmin() {
+        for (Role role: roles) {
+            if (role.equals(Role.ROLE_ADMIN)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getThymeleafDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+        return registred.format(formatter);
     }
 }

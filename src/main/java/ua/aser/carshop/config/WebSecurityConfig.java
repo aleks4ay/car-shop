@@ -35,7 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/registration", "/login").anonymous()
+                .antMatchers("/users", "/users/*", "/users/**", "/shopAdmin", "/shopAdmin/*").hasRole("ADMIN")
+                .antMatchers("/registration", "/login").anonymous()
 //                .antMatchers("/", "/home", "/shop", "/shop/**", "/cart", "/logout", "/static/**", "/activate/*").permitAll()  //allow full access to all users there
 //                .anyRequest().authenticated()
                 .anyRequest().permitAll()
