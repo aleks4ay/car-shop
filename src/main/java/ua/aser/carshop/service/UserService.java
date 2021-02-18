@@ -1,6 +1,9 @@
 package ua.aser.carshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +14,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService /*implements UserDetailsService*/{
 
     @Autowired
     private UserRepository userRepository;
@@ -29,7 +32,7 @@ public class UserService {
 
     @Transactional
     public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
 //        passwordEncoder.matches(password, user.getPassword());
         userRepository.save(user);
     }
@@ -38,4 +41,9 @@ public class UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(Long.valueOf(id));
     }
+
+/*    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return userRepository.findByLogin(login);
+    }*/
 }

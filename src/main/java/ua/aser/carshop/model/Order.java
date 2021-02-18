@@ -13,6 +13,8 @@ public class Order {
     @GeneratedValue
     private Long id;
 
+    private String sessionId;
+
     private LocalDateTime registred = LocalDateTime.now();
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
@@ -49,10 +51,6 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    public void addDescriptions(OrderItem descriptions) {
-        this.orderItems.add(descriptions);
-    }
-
     public User getUser() {
         return user;
     }
@@ -66,12 +64,22 @@ public class Order {
         orderItem.setOrder(this);
     }
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
+                ", sessionId='" + sessionId + '\'' +
                 ", registred=" + registred +
                 ", orderItems=" + orderItems +
+                ", user=" + user +
                 '}';
     }
 }

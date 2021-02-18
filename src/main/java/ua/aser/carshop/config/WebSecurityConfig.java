@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ua.aser.carshop.service.UserService;
 
 import javax.sql.DataSource;
 
@@ -33,23 +35,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/registration", "/login").anonymous()
-                .antMatchers("/", "/home", "/shop", "/cart", "/logout", "/static/**", "/activate/*").permitAll()  //allow full access to all users there
-                .anyRequest().authenticated()
+//                .antMatchers("/registration", "/login").anonymous()
+//                .antMatchers("/", "/home", "/shop", "/shop/**", "/cart", "/logout", "/static/**", "/activate/*").permitAll()  //allow full access to all users there
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             .and()
                 .formLogin()
                 .loginPage("/login")
 //                .usernameParameter("login")
 //                .failureUrl("/login?error=true")
                 .permitAll()
+//            .and()
+//                .rememberMe()
+//            .and()
+//                .exceptionHandling()
+//                .accessDeniedPage("/home")
             .and()
-                .rememberMe()
-            .and()
-                .exceptionHandling()
-                .accessDeniedPage("/home")
-            .and()
-                .logout()
-                .permitAll();
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
     }
 
     @Override
@@ -60,6 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select login, password, active from usr where login=?")
                 .authoritiesByUsernameQuery("select u.login, ur.role from usr u inner join user_roles ur on u.id = ur.user_id where u.login=?");
     }
+
+/*    @Autowired
+    private UserService userService;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }*/
+
 }
 
 

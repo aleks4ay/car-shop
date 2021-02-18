@@ -17,9 +17,10 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/registration")
-    public String registration(Map<String, Object> model) {
+    public String registration(Map<String, Object> model ) {
         return "registration";
     }
+
     @PostMapping("/registration")
     public String newClient(@ModelAttribute User user, Map<String, Object> model) {
         user.setActive(true);
