@@ -23,10 +23,10 @@ public class OrderService {
         return orderRepository.findById(id).orElse(null);
     }
 
-    public Order getBySessionId(String sessionId) {
+   /* public Order getBySessionId(String sessionId) {
         return orderRepository.findBySessionId(sessionId);
     }
-
+*/
     @Transactional
     public void save(Order orderItem) {
         orderRepository.save(orderItem);

@@ -6,5 +6,5 @@ import ua.aser.carshop.model.Order;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long> {
-    Order findBySessionId (String sessionId);
+//    Order findBySessionId (String sessionId);
 }

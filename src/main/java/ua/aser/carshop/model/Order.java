@@ -13,7 +13,7 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    private String sessionId;
+//    private String sessionId;
 
     private LocalDateTime registred = LocalDateTime.now();
 
@@ -64,19 +64,19 @@ public class Order {
         orderItem.setOrder(this);
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
+//    public String getSessionId() {
+//        return sessionId;
+//    }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
+//    public void setSessionId(String sessionId) {
+//        this.sessionId = sessionId;
+//    }
 
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", sessionId='" + sessionId + '\'' +
+//                ", sessionId='" + sessionId + '\'' +
                 ", registred=" + registred +
                 ", orderItems=" + orderItems +
                 ", user=" + user +

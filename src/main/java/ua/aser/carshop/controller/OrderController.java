@@ -17,6 +17,7 @@ import ua.aser.carshop.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +28,8 @@ public class OrderController {
     private ProductService productService;
     @Autowired
     private OrderItemService orderItemService;
-    @Autowired
-    private OrderService orderService;
+//    @Autowired
+//    private OrderService orderService;
     @Autowired
     private UserService userService;
 
@@ -39,39 +40,57 @@ public class OrderController {
         return "shop";
     }
 
-    @GetMapping("/order/newItem")
-    public String newClient(Map<String, Object> model) {
-        Product product = new Product();
-        OrderItem orderItem = new OrderItem(0, 0d, product);
-        model.put("orderItem", orderItem);
-        return "order_new";
+    @GetMapping("/cart")
+    public String getCart(HttpServletRequest httpServletRequest,
+                          HttpSession httpSession,
+                          Map<String, Object> model) {
+        User user = userService.getOne(httpServletRequest.getRemoteUser());
+        List<OrderItem> orderItems = (List<OrderItem>) httpSession.getAttribute("orderItems");
+        model.put("orderItems", orderItems);
+        return "cart";
     }
+
+    @PostMapping("/cart/save")
+    public String newOrder(HttpServletRequest httpServletRequest,
+                           HttpSession httpSession,
+                           Map<String, Object> model) {
+        List<OrderItem> orderItems = (List<OrderItem>) httpSession.getAttribute("orderItems");
+        if (orderItems == null){
+            return "redirect:/shop";
+        }
+        String login = httpServletRequest.getRemoteUser();
+        User user = null;
+        if (login != null) {
+            user = userService.getOne(login);
+        }
+        Order order = new Order();
+        user.addOrder(order);
+        for (OrderItem item : orderItems){
+            Product p1 = productService.getOne(item.getProduct().getId());
+            item.setProduct(p1);
+            order.addOrderItem(item);
+            orderItemService.save(item);
+        }
+        httpSession.setAttribute("orderItems", null);
+        order = null;
+
+        return "redirect:/cart";
+    }
+
     @GetMapping("/shop/add")
     public String newOrderItem(@RequestParam(name = "id") String id,
                                HttpServletRequest httpServletRequest,
                                HttpSession httpSession,
                                Map<String, Object> model) {
-        boolean isRoleUser = httpServletRequest.isUserInRole("USER");
-        boolean isRoleAdmin = httpServletRequest.isUserInRole("ADMIN");
-//        User user = (User) httpSession.getAttribute("owner");
-        String sesseonId = httpSession.getId();
-//        Order order = orderService.getBySessionId(sesseonId);
-        Order order = (Order)httpSession.getAttribute("order");
-        if (order == null) {
-            order = new Order();
-            order.setSessionId(sesseonId);
+//        boolean isRoleUser = httpServletRequest.isUserInRole("USER");
+//        boolean isRoleAdmin = httpServletRequest.isUserInRole("ADMIN");
+        List<OrderItem> orderItems = (List<OrderItem>) httpSession.getAttribute("orderItems");
+        if (orderItems == null) {
+            orderItems = new ArrayList<>();
         }
         Product product = productService.getOne(Long.valueOf(id));
-        OrderItem orderItem = new OrderItem(1, product.getPrice(), product);
-        order.addOrderItem(orderItem);
-//        String login = httpServletRequest.getRemoteUser();
-        /*User user = null;
-        if (login!=null) {
-            user = userService.getOne(login);
-        }
-        user.addOrder(order);*/
-//            orderItemService.save(orderItem);
-        httpSession.setAttribute("order", order);
+        orderItems.add(new OrderItem(1, product.getPrice(), product));
+        httpSession.setAttribute("orderItems", orderItems);
         return "redirect:/shop";
     }
 
@@ -90,8 +109,6 @@ public class OrderController {
 
     @GetMapping("/admin/product/change")
     public String changeProduct(@RequestParam(name = "id") String id,
-//                                HttpServletRequest httpServletRequest,
-//                                HttpSession httpSession,
                                 Map<String, Object> model) {
         Product product = productService.getOne(Long.valueOf(id));
         model.put("product", product);
@@ -100,7 +117,6 @@ public class OrderController {
 
     @PostMapping("/admin/product/change")
     public String changeProduct(@ModelAttribute Product product, Map<String, Object> model) {
-//        productService.update(product);
         productService.save(product);
         return "redirect:/admin/product";
     }
@@ -110,44 +126,4 @@ public class OrderController {
         productService.deleteById(Long.valueOf(id));
         return "redirect:/admin/product";
     }
-
-/*    @GetMapping("/cc")
-    public String testС(Map<String, Object> model) {
-        User user = ((List<User>)userService.getAll()).get(0);
-        Order order = new Order();
-        user.addOrder(order);
-        Product p1 = new Product("носки", "красные", 45);
-        Product p2 = new Product("платок", "Оренбуржский", 145);
-        OrderItem i1 = new OrderItem(1, 234, p1);
-        OrderItem i2 = new OrderItem(1, 1234, p2);
-        order.addOrderItem(i1);
-        order.addOrderItem(i2);
-        orderItemService.save(i1);
-        orderItemService.save(i2);
-        return "redirect:users";
-    }
-
-    @GetMapping("/bb")
-    public String testB(Map<String, Object> model) {
-        User user = ((List<User>)userService.getAll()).get(0);
-        Order order = new Order();
-        user.addOrder(order);
-        Product p1 = productService.getOne(19L);
-        Product p2 = productService.getOne(21L);
-        OrderItem i1 = new OrderItem(3, 45, p1);
-        OrderItem i2 = new OrderItem(2, 145, p2);
-        order.addOrderItem(i1);
-        order.addOrderItem(i2);
-        orderItemService.save(i1);
-        orderItemService.save(i2);
-        return "redirect:users";
-    }
-
-    @GetMapping("/aa")
-    public String testA(Map<String, Object> model) {
-        User user = ((List<User>)userService.getAll()).get(1);
-        user.getOrders().get(0).getOrderItems().get(0).setQuantity(444);
-        userService.save(user);
-        return "redirect:users";
-    }*/
 }
