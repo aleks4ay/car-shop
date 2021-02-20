@@ -6,7 +6,7 @@
 <div th:insert="~{fragments/header :: navbar}"> </div>
 <h1>S H O P administration</h1>
 
-<form action="#" th:action="@{/shopAdmin/new}" th:object="${product}" method="post">
+<form action="#" th:action="@{/admin/product/new}" th:object="${product}" method="post">
     <input type="text" name="name" placeholder="name"/>
     <input type="text" name="color" placeholder="color"/>
     <input type="number" name="price" placeholder="price"/>
@@ -36,9 +36,8 @@
         <td th:text="${product.color}"></td>
         <td th:text="${product.price}"></td>
         <td th:text="${product.thymeleafDate}"></td>
-        <td><a href="#" th:href="'shopAdmin/change?id=' + ${product.id}">
-            Изменить
-        </a> </td>
+        <td><a href="#" th:href="'/admin/product/change?id=' + ${product.id}"> Изменить </a> </td>
+        <td><a href="#" th:href="'/admin/product/del?id=' + ${product.id}"> Удалить </a> </td>
     </tr>
     </tbody>
 </table>

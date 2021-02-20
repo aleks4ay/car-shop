@@ -28,7 +28,7 @@
         <td th:text="${user.email}"></td>
         <td><input type="checkbox" th:checked="${user.active}" disabled> </td>
         <td th:text="${user.thymeleafDate}"></td>
-        <td><a href="user_del" th:href="'users/del?id=' + ${user.id}">Delete</a></td>
+        <td><a href="user_del" th:href="'/admin/users/del?id=' + ${user.id}">Delete</a></td>
     </tr>
     </tbody>
 </table>

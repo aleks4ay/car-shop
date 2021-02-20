@@ -30,16 +30,16 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/users")
+    @GetMapping("admin/users")
     public String getCustomer(Map<String, Object> model) {
         List<User> users = (List<User>) userService.getAll();
         model.put("users", users);
         return "user_list";
     }
 
-    @GetMapping("/users/del")
+    @GetMapping("admin/users/del")
     public String deleteById (@RequestParam String id, Map<String, Object> model) {
         userService.deleteById(Long.valueOf(id));
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }

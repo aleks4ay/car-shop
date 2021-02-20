@@ -75,30 +75,43 @@ public class OrderController {
         return "redirect:/shop";
     }
 
-    @GetMapping("/shopAdmin")
+    @GetMapping("/admin/product")
     public String listProductAdmin(Map<String, Object> model) {
         List<Product> products = productService.getAll();
         model.put("products", products);
-        return "shop_admin";
+        return "product";
     }
 
-    @PostMapping("/shopAdmin/new")
+    @PostMapping("/admin/product/new")
     public String newClient(@ModelAttribute Product product, Map<String, Object> model) {
         productService.save(product);
-        return "redirect:/shopAdmin";
+        return "redirect:/admin/product";
     }
 
-    @GetMapping("/shopAdmin/change")
+    @GetMapping("/admin/product/change")
     public String changeProduct(@RequestParam(name = "id") String id,
-                                HttpServletRequest httpServletRequest,
-                                HttpSession httpSession,
+//                                HttpServletRequest httpServletRequest,
+//                                HttpSession httpSession,
                                 Map<String, Object> model) {
         Product product = productService.getOne(Long.valueOf(id));
         model.put("product", product);
         return "product_change";
     }
 
-    @GetMapping("/cc")
+    @PostMapping("/admin/product/change")
+    public String changeProduct(@ModelAttribute Product product, Map<String, Object> model) {
+//        productService.update(product);
+        productService.save(product);
+        return "redirect:/admin/product";
+    }
+
+    @GetMapping("admin/product/del")
+    public String deleteProduct (@RequestParam String id, Map<String, Object> model) {
+        productService.deleteById(Long.valueOf(id));
+        return "redirect:/admin/product";
+    }
+
+/*    @GetMapping("/cc")
     public String testС(Map<String, Object> model) {
         User user = ((List<User>)userService.getAll()).get(0);
         Order order = new Order();
@@ -136,5 +149,5 @@ public class OrderController {
         user.getOrders().get(0).getOrderItems().get(0).setQuantity(444);
         userService.save(user);
         return "redirect:users";
-    }
+    }*/
 }
