@@ -100,4 +100,33 @@ public class Product {
                 ", orderItems=" + orderItems +
                 '}';
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (Double.compare(product.getPrice(), getPrice()) != 0) return false;
+        if (getId() != null ? !getId().equals(product.getId()) : product.getId() != null) return false;
+        if (getName() != null ? !getName().equals(product.getName()) : product.getName() != null) return false;
+        if (getColor() != null ? !getColor().equals(product.getColor()) : product.getColor() != null) return false;
+        return getRegistred() != null ? getRegistred().equals(product.getRegistred()) : product.getRegistred() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getColor() != null ? getColor().hashCode() : 0);
+        temp = Double.doubleToLongBits(getPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (getRegistred() != null ? getRegistred().hashCode() : 0);
+        return result;
+    }
 }

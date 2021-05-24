@@ -11,6 +11,7 @@ import ua.aser.carshop.model.User;
 import ua.aser.carshop.repository.UserRepository;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,6 +31,10 @@ public class UserService /*implements UserDetailsService*/{
         return userRepository.findByLogin(login);
     }
 
+    public User getById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     @Transactional
     public void save(User user) {
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,9 +46,4 @@ public class UserService /*implements UserDetailsService*/{
     public void deleteById(Long id) {
         userRepository.deleteById(Long.valueOf(id));
     }
-
-/*    @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return userRepository.findByLogin(login);
-    }*/
 }

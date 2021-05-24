@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="~{fragments/header :: head}"/>
+
+<body>
+    <div th:insert="~{fragments/header :: navbar}"> </div>
+    <h1>User order List</h1>
+
+
+    <div th:each="user,step : ${users}">
+        <div class="card" style="width: 50%; margin: 10px">
+            <div class="card-header">
+                <h5>
+                    <i th:text="${step.count + '. client: '}"/>
+                    <b th:text="${'&laquo;' + user.login + '&raquo;'}"/>
+                </h5>
+            </div>
+            <div class="card-body" th:if="${user.orders != Null}">
+                <span th:each="order,step : ${user.orders}">
+                    <h6 class="card-title" th:text="${'Заказ №' + order.id}">Special title treatment</h6>
+                    <ul th:each="item,step : ${order.orderItems}">
+                        <li class="card-text">
+                            <b th:text="${item.product.name + '.'}"> </b>
+                            <i>Цвет: </i> <b th:text="${item.product.color + '.'}"> </b>
+                            <i>Цена: </i> <b th:text="${item.correctPrice + ' грн.'}"> </b>
+                            <i>Количество: </i> <b th:text="${item.quantity}"> </b>
+                        </li>
+                    </ul>
+                </span>
+            </div>
+            <div th:if="${user.orders.size == 0}" style="text-align: center"><b>No orders yet.</b></div>
+        </div>
+    </div>
+
+
+    <div th:insert="~{fragments/header :: footer}"> </div>
+</body>
+</html>

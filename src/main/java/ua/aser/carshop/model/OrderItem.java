@@ -3,6 +3,7 @@ package ua.aser.carshop.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "order_item")
 public class OrderItem {
 
     @Id
@@ -71,7 +72,7 @@ public class OrderItem {
     @Override
     public String toString() {
         return "OrderItem{" +
-                "id=" + id +
+//                "id=" + id +
                 ", quantity=" + quantity +
                 ", correctPrice=" + correctPrice +
                 ", product_id=" + product.getId() +

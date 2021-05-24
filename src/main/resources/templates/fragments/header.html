@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head  th:fragment="head">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,15 +15,15 @@
 
     <div th:fragment="navbar">
       <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <a class="navbar-brand" href="/home">CAR SHOP</a>
+        <a class="navbar-brand" href="/">CAR SHOP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+<!--            <li class="nav-item">
               <a class="nav-link" href="/home">Home</a>
-            </li>
+            </li>-->
             <li class="nav-item">
               <a class="nav-link" href="/shop">Магазин</a>
             </li>
@@ -37,6 +36,9 @@
 
             <li class="nav-item" th:if="${#httpServletRequest.isUserInRole('ADMIN')}">
                 <a class="nav-link" href="/admin/users">Пользователи</a>
+            </li>
+            <li class="nav-item" th:if="${#httpServletRequest.isUserInRole('ADMIN')}">
+                <a class="nav-link" href="/admin/user_carts">Заказы</a>
             </li>
             <li class="nav-item" th:if="${#httpServletRequest.isUserInRole('ADMIN')}">
                 <a class="nav-link" href="/admin/product">Товары</a>

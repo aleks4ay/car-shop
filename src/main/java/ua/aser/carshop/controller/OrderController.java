@@ -2,14 +2,12 @@ package ua.aser.carshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.aser.carshop.model.OrderItem;
-import ua.aser.carshop.model.Order;
-import ua.aser.carshop.model.Product;
-import ua.aser.carshop.model.User;
+import ua.aser.carshop.model.*;
 import ua.aser.carshop.service.OrderItemService;
 import ua.aser.carshop.service.OrderService;
 import ua.aser.carshop.service.ProductService;
@@ -47,14 +45,18 @@ public class OrderController {
         User user = userService.getOne(httpServletRequest.getRemoteUser());
         List<OrderItem> orderItems = (List<OrderItem>) httpSession.getAttribute("orderItems");
         model.put("orderItems", orderItems);
+        System.out.println("");
         return "cart";
     }
 
     @PostMapping("/cart/save")
     public String newOrder(HttpServletRequest httpServletRequest,
                            HttpSession httpSession,
-                           Map<String, Object> model) {
-        List<OrderItem> orderItems = (List<OrderItem>) httpSession.getAttribute("orderItems");
+                           Map<String, Object> model,
+                           @ModelAttribute(name = "newOrder") Order orderFromView) {
+
+
+        List<OrderItem> orderItems = orderFromView.getOrderItems();
         if (orderItems == null){
             return "redirect:/shop";
         }
@@ -65,6 +67,7 @@ public class OrderController {
         }
         Order order = new Order();
         user.addOrder(order);
+//        order.setOrderItems(orderItems);
         for (OrderItem item : orderItems){
             Product p1 = productService.getOne(item.getProduct().getId());
             item.setProduct(p1);
@@ -72,8 +75,6 @@ public class OrderController {
             orderItemService.save(item);
         }
         httpSession.setAttribute("orderItems", null);
-        order = null;
-
         return "redirect:/cart";
     }
 
@@ -89,7 +90,7 @@ public class OrderController {
             orderItems = new ArrayList<>();
         }
         Product product = productService.getOne(Long.valueOf(id));
-        orderItems.add(new OrderItem(1, product.getPrice(), product));
+        addProduct(orderItems, product);
         httpSession.setAttribute("orderItems", orderItems);
         return "redirect:/shop";
     }
@@ -125,5 +126,17 @@ public class OrderController {
     public String deleteProduct (@RequestParam String id, Map<String, Object> model) {
         productService.deleteById(Long.valueOf(id));
         return "redirect:/admin/product";
+    }
+
+    private void addProduct(List<OrderItem> orderItems, Product product) {
+        if (orderItems.size() > 0) {
+            for (OrderItem item : orderItems) {
+                if (item.getProduct().equals(product)) {
+                    item.setQuantity(item.getQuantity() + 1);
+                    return;
+                }
+            }
+        }
+        orderItems.add(new OrderItem(1, product.getPrice(), product));
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class OrderService {
 
-    @Autowired
+//    @Autowired
     private OrderRepository orderRepository;
 
     public List<Order> getAll() {
@@ -28,7 +28,12 @@ public class OrderService {
     }
 */
     @Transactional
-    public void save(Order orderItem) {
-        orderRepository.save(orderItem);
+    public void save(Order order) {
+        orderRepository.save(order);
+    }
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 }

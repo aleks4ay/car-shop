@@ -32,14 +32,23 @@ public class UserController {
 
     @GetMapping("admin/users")
     public String getCustomer(Map<String, Object> model) {
-        List<User> users = (List<User>) userService.getAll();
+        List<User> users = userService.getAll();
         model.put("users", users);
         return "user_list";
     }
 
-    @GetMapping("admin/users/del")
-    public String deleteById (@RequestParam String id, Map<String, Object> model) {
-        userService.deleteById(Long.valueOf(id));
+    @GetMapping("admin/user_carts")
+    public String getUserCarts(Map<String, Object> model) {
+        List<User> users = userService.getAll();
+        model.put("users", users);
+        return "user_cart_list";
+    }
+
+    @GetMapping("admin/users/active")
+    public String changeActive (@RequestParam String id, @RequestParam String active, Map<String, Object> model) {
+        User user = userService.getById(Long.valueOf(id));
+        user.setActive(!user.isActive());
+        userService.save(user);
         return "redirect:/admin/users";
     }
 }

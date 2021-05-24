@@ -10,37 +10,50 @@
     <h3 th:text="${'Здравствуйте, '+ #httpServletRequest.remoteUser}"/>
 </div>
 <h3>Ваш заказ:</h3>
-<table class="table">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">№</th>
-        <th scope="col">Наименование</th>
-        <th scope="col">Цвет</th>
-        <th scope="col">Количество</th>
-        <th scope="col">Цена, грн</th>
-        <th scope="col">Стоимость, грн</th>
-    </tr>
-    </thead>
-    <tbody th:unless="${orderItems == Null}">
-    <tr th:each="item,step : ${orderItems}">
-        <th scope="row">
-            <input type="hidden" value="#" th:value="${item.product.id}"/>
-            <span th:text="${step.count}"/>
-        </th>
-        <td th:text="${item.product.name}"></td>
-        <td th:text="${item.product.color}"></td>
-        <!--<td th:text="${item.quantity}"></td>-->
-        <td> <input type="number" name="item.quantity" value="#" th:value="${item.quantity}"> </td>
-        <td th:text="${item.correctPrice}"></td>
-        <td th:text="${item.quantity * item.correctPrice}"></td>
-        <td><a href="#" th:href="'/cart/del?id=' + ${item.product.id}"> Удалить </a> </td>
-    </tr>
-    </tbody>
-</table>
 
-<div th:if="${#httpServletRequest.remoteUser != Null}">
-    <form th:action="@{/cart/save}" th:object="${orderItems}" method="post">
+
+<div> <!-- <div th:if="${#httpServletRequest.remoteUser != Null}"> -->
+    <form th:action="@{/cart/save}" th:object="${newOrder}" method="post">
+
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Цвет</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Цена, грн</th>
+                <th scope="col"> Стоимость, грн
+                    <input type="hidden" th:name="id" th:value="${-5L}"/>
+                </th>
+
+            </tr>
+            </thead>
+            <tbody th:unless="${orderItems == Null}">
+            <tr>
+
+            </tr>
+            <tr th:each="item,step : ${orderItems}">
+                <th scope="row">
+                    <input type="hidden" th:name="${'orderItems[' + step.index + '].product.id'}" th:value="${item.product.id}"/>
+                    <span th:text="${step.count}"/>
+                </th>
+
+                <td><input type="text" th:name="${'orderItems[' + step.index + '].product.name'}" th:value="${item.product.name}"/></td>
+                <td><input type="text" th:name="${'orderItems[' + step.index + '].product.color'}" th:value="${item.product.color}"/></td>
+                <!--<td><input type="text" th:name="${'orderItems[' + step.index + '].product.price'}" th:value="${item.product.price}"/></td>-->
+
+                <td><input type="number" th:name="${'orderItems[' + step.index + '].quantity'}" th:value="${item.quantity}"> </td>
+                <td><input type="text" th:name="${'orderItems[' + step.index + '].correctPrice'}" th:value="${item.correctPrice}"/></td>
+
+                <td th:text="${item.quantity * item.correctPrice}"></td>
+                <td><a href="#" th:href="'/cart/del?id=' + ${item.product.id}"> Удалить </a> </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${#httpServletRequest.remoteUser != Null}">
         <input type="submit" value="Оформить заказ" class="btn btn-outline-success my-2 my-sm-0"/>
+        </div>
     </form>
 </div>
 
